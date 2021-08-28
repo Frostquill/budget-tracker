@@ -1,6 +1,6 @@
 let db;
 
-const request = indexedDB.oppen('budget_tracker', 1);
+const request = indexedDB.open('budget_tracker', 1);
 
 request.onupgradeneeded = function(event) {
     const db=event.target.result;
@@ -23,17 +23,17 @@ request.onerror = function(event) {
 
 // offline functionality
 function saveRecord(record) {
-    const transaction = db.transaction(['new_budget'], 'readwrite');
+    const transaction = db.transaction(['budget_tracker'], 'readwrite');
 
-    const budgetObjectStore = transaction.objectStore('new_budget');
+    const budgetObjectStore = transaction.objectStore('budget_tracker');
 
     budgetObjectStore.add(record);
 }
 
 function uploadBudget() {
-    const transaction = db.transaction(['new_budget'], 'readwrite');
+    const transaction = db.transaction(['budget_tracker'], 'readwrite');
 
-    const budgetObjectStore = transaction.objectStore('new_budget');
+    const budgetObjectStore = transaction.objectStore('budget_tracker');
 
     const getAll = budgetObjectStore.getAll();
 
@@ -53,9 +53,9 @@ function uploadBudget() {
                 throw new Error(serverResponse);
             }
 
-            const transaction = db.transaction(['new_budget'], 'readwrite');
+            const transaction = db.transaction(['budget_tracker'], 'readwrite');
 
-            const budgetObjectStore = transaction.objectStore('new_budget');
+            const budgetObjectStore = transaction.objectStore('budget_tracker');
 
             budgetObjectStore.clear();
 

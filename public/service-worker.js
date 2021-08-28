@@ -4,15 +4,15 @@ const CACHE_NAME = APP_PREFIX + VERSION;
 
 const FILES_TO_CACHE = [
     './index.html',
-    './public/css/styles.css',
-    './public/js/idb.js',
-    './public/js/index.js'
-]
+    './css/styles.css',
+    './js/idb.js',
+    './js/index.js'
+];
 
 self.addEventListener('install', function (e) {
     e.waitUntil(
         caches.open(CACHE_NAME).then(function(cache) {
-            console.log('installing cache:' + CACHE_NAME)
+            console.log('installing cache: ' + CACHE_NAME)
             return cache.addAll(FILES_TO_CACHE)
         })
     )
@@ -23,7 +23,7 @@ self.addEventListener('activate', function(e) {
     e.waitUntil(
         caches.keys().then(function (keyList) {
             let cacheKeeplist = keyList.filter(function(key) {
-                return key.indexOf(APP.PREFIX);
+                return key.indexOf(APP_PREFIX);
             })
             cacheKeeplist.push(CACHE_NAME);
             return Promise.all(
