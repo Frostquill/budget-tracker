@@ -5,7 +5,9 @@ const request = indexedDB.open('budget_tracker', 1);
 request.onupgradeneeded = function(event) {
     const db=event.target.result;
 
-    db.createObjectStore('budget_tracker', {autoIncrement: true});
+    db.createObjectStore('budget_tracker', {
+        keyPath: "id",
+        autoIncrement: true});
 };
 
 request.onsuccess = function(event) {
@@ -39,7 +41,7 @@ function uploadBudget() {
 
     getAll.onsuccess = function() {
         if(getAll.result.length > 0) {
-            fetch('/api/transaction', {
+            fetch('/api/transaction/bulk', {
             method: 'POST',
             body: JSON.stringify(getAll.result),
             headers: {
